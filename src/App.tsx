@@ -44,8 +44,9 @@ function App(): JSX.Element {
         <div className="col-md-6 offset-md-3">
           <div className="card">
             <div className="card-body">
+              <h2>This is a Fisrt Request</h2>
               <form onSubmit={handleSubmit}>
-                <label className="form-control-plaintext">Add Task</label>
+                <label className="form-control-plaintext pt-0">Add a New Task</label>
                 <input
                   onChange={(e) => setNewTask(e.target.value)}
                   value={newTask}
@@ -55,7 +56,7 @@ function App(): JSX.Element {
                   autoFocus
                 />
                 <div className="d-grid gap-2">
-                  <button className="btn btn-outline-success btn-sm mt-3">
+                  <button className="btn btn-outline-success btn-md mt-3">
                     Save
                   </button>
                 </div>
@@ -76,7 +77,7 @@ function App(): JSX.Element {
                 {t.done ? "✓" : "✗"}
               </button>
               <button
-                className="btn-outline-danger"
+                className="btn-outline-danger mt-3"
                 onClick={() => removeTask(index)}
               >
                 🗑
