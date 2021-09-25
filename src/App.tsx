@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 type FormElement = React.FormEvent<HTMLFormElement>;
 interface ITask {
   taskName: string;
@@ -9,34 +9,83 @@ function App(): JSX.Element {
   const initialState = "";
   const [newTask, setNewTask] = useState<string>(initialState);
   const [tasks, setTask] = useState<ITask[]>([]);
+  const taskInput = useRef<HTMLInputElement>(null);
   const handleSubmit = (e: FormElement) => {
     e.preventDefault();
-    console.log("Sending...", newTask);
-    addTask(newTask);
-    setNewTask(initialState);
-    console.log(tasks);
+    if (newTask === "") {
+      console.log("Is empty you");
+    } else {
+      addTask(newTask);
+      setNewTask(initialState);
+      taskInput.current?.focus();
+    }
   };
 
-  const addTask = (taskName: string) => {
+  const addTask = (taskName: string): void => {
     const newTasks: ITask[] = [...tasks, { taskName, done: false }];
     setTask(newTasks);
   };
 
+  const toggleDoneTask = (index: number): void => {
+    const newTasks: ITask[] = [...tasks];
+    newTasks[index].done = !newTasks[index].done;
+    setTask(newTasks);
+  };
+
+  const removeTask = (index: number): void => {
+    const newTasks: ITask[] = [...tasks];
+    newTasks.splice(index, 1);
+    setTask(newTasks);
+  };
+
   return (
-    <>
-      <h1>Please Add New Task</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          onChange={(e) => setNewTask(e.target.value)}
-          value={newTask}
-        />
-        <button>Save</button>
-      </form>
-      {tasks.map((t: ITask, index: number) => {
-        return <h1 key={index}>{t.taskName}</h1>;
-      })}
-    </>
+    <div className="container p-4">
+      <div className="row">
+        <div className="col-md-6 offset-md-3">
+          <div className="card">
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <label className="form-control-plaintext">Add Task</label>
+                <input
+                  onChange={(e) => setNewTask(e.target.value)}
+                  value={newTask}
+                  type="text"
+                  className="form-control"
+                  ref={taskInput}
+                  autoFocus
+                />
+                <div className="d-grid gap-2">
+                  <button className="btn btn-outline-success btn-sm mt-3">
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          {tasks.map((t: ITask, index: number) => (
+            <div className="card card-body mt-2" key={index}>
+              <h2 style={{ textDecoration: t.done ? "line-through" : "" }}>
+                {t.taskName}
+              </h2>
+              <p>{t.done ? "Complete!!!" : "Not Complete!!!"}</p>
+
+              <button
+                className="btn-outline-secondary"
+                onClick={() => toggleDoneTask(index)}
+              >
+                {t.done ? "✓" : "✗"}
+              </button>
+              <button
+                className="btn-outline-danger"
+                onClick={() => removeTask(index)}
+              >
+                🗑
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
