@@ -44,11 +44,7 @@ function App(): JSX.Element {
         <div className="col-md-6 offset-md-3">
           <div className="card">
             <div className="card-body">
-<<<<<<< HEAD
-              <h2>¡¡¡Add Your New Task!!!</h2>
-=======
-              <h2>Add Your New Task</h2>
->>>>>>> c2deba3195dedec83bd81266fde7c1e06cdfc4fc
+              <h2>You Can Add a New Task</h2>
               <form onSubmit={handleSubmit}>
                 <label className="form-control-plaintext pt-0">Add a New Task</label>
                 <input
@@ -84,11 +80,7 @@ function App(): JSX.Element {
                 className="btn-outline-danger mt-3"
                 onClick={() => removeTask(index)}
               >
-<<<<<<< HEAD
-                🗑 Delete Task !!!!
-=======
-                Delete Task
->>>>>>> c2deba3195dedec83bd81266fde7c1e06cdfc4fc
+                Task DELETE
               </button>
             </div>
           ))}
